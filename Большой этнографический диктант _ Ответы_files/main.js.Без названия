@@ -1,0 +1,308 @@
+//Для отладки
+//console.log("ЛОКАЛЬ: " + getCookie("locale"));
+//console.log("ФИО: " + getCookie("name"));
+//console.log("Почта: " + getCookie("email"));
+//console.log("Возраст: " + getCookie("age"));
+//console.log("Страна: " + getCookie("country"));
+//console.log("Регион: " + getCookie("region"));
+//console.log("Пол: " + getCookie("sex"));
+//console.log("Ключ прохождения: " + getCookie("key"));
+//console.log("Согласие: " + getCookie("accord"));
+//console.log("Закончил тест: " + getCookie("test-end"));
+//console.log("Ответы: " + getCookie("totalAnswers"));
+//console.log("Результат: " + getCookie("result"));
+
+if (typeof localStorage === 'undefined') {
+	console.log("localStorage не работает!");
+}
+
+//Инициализация анимаций
+new WOW().init();
+//Установка в куки языковой версии (происходит постоянно, потому что человек может менять языковую версию в динамике)
+var URL = window.location.href;
+var en = URL.indexOf("en/") !== -1;
+var es = URL.indexOf("es/") !== -1;
+if (en == true) {
+    setCookie('locale', 'EN');
+    localStorage.setItem('locale', 'EN');
+} else {
+    if (es == true) {
+        setCookie('locale', 'ES');
+        localStorage.setItem('locale', 'ES');
+    } else {
+        setCookie('locale', 'RU');
+        localStorage.setItem('locale', 'RU');
+    }
+}
+
+//Однократно, устанавливаем значения по умолчанию
+//В КУКИ
+if (getCookie("default") != 1) {
+    //По умолчанию ставим "Россия"
+    setCookie('country', '3468');
+    //По умолчанию ставим "Россия"
+    setCookie('region', '0');
+    //По умолчанию ставим вопросы для федералов и региональные
+    setCookie('key', 1);
+    //Установить 
+    setCookie('accord',"Нет")
+    //Тест по умолчанию доступен
+    setCookie('test-end', "Нет");
+}
+setCookie('default', '1');
+
+//В localeStorage
+if (localStorage.getItem('default') != 1) {
+    //По умолчанию ставим "Россия"
+    localStorage.setItem('country', '3468');
+    //По умолчанию ставим вопросы для федералов и региональные
+    localStorage.setItem('key', '1');
+    //Установить 
+    localStorage.setItem('accord', 'Нет');
+    //Тест по умолчанию доступен
+    localStorage.setItem('test-end', 'Нет');
+}
+localStorage.setItem('default', '1');
+
+
+//Проверка на локаль для вывода определенного сертификата
+if(getCookie("locale")=='EN') {
+    $("#sert-ru").css('display','none');
+    $("#sert-eng").css('display','block');
+} else if(getCookie("locale")=='ES') {
+    $("#sert-ru").css('display','none');
+    $("#sert-spain").css('display','block');
+}
+if (localStorage.getItem('locale')=='EN') {
+    $("#sert-ru").css('display','none');
+    $("#sert-eng").css('display','block');
+} else if(localStorage.getItem('locale')=='ES') {
+    $("#sert-ru").css('display','none');
+    $("#sert-spain").css('display','block');
+}
+
+
+//Инициализация слайдера на главной странице
+$('.moments_list').slick({
+    infinite: true,
+    lazyLoad: 'ondemand',
+    slidesToScroll: 1,
+    slidesToShow: 3,
+    centerPadding: '20px',
+    responsive: [
+    {
+      breakpoint: 1200,
+      settings: {
+        slidesToShow: 3
+      }
+    },
+    {
+      breakpoint: 988,
+      settings: {
+        slidesToShow: 2
+      }
+    },
+    {
+      breakpoint: 525,
+      settings: {
+        slidesToShow: 1
+      }
+    }]
+});
+
+$(document).ready(function() {
+    //Мобильное меню
+    $('.menu-burger__header').click(function() {
+        $('.menu-burger__header').toggleClass('open-menu');
+        $('.header-nav').toggleClass('open-menu');
+    });
+});
+
+$('#remember').on('click', function () {
+    $.fancybox.close();
+});
+
+//Функция "Показать всё" в "Региональных координаторах"
+$('.show-all .pick-link').on('click', function () {
+    if($("#regional .table").hasClass("hidden")) {
+        $("#regional .table").removeClass("hidden");
+        $(".show-all").addClass("hidden");
+        $(".hide-all").removeClass("hidden");
+    }
+    event.preventDefault();
+});
+
+//Функция "Скрыть всё" в "Региональных координаторах"
+$('.hide-all .pick-link').on('click', function () {
+    if($("#regional .table").hasClass("hidden")) {
+        
+    } else {
+        $("#regional .table").addClass("hidden");
+        $(".show-all").removeClass("hidden");
+        $(".hide-all").addClass("hidden");
+    }
+    event.preventDefault();
+});
+
+//Функция смены значения "Страны" в основном модальном окне про геолокацию пользователя
+$(document).on("change", "#location-country", function(e){
+    var optionSelected = $("option:selected", this);
+    var valueSelected = this.value;
+    //Если человек выбрал страну через модальное окно, то мы устанавливаем ему её в куки
+    setCookie('country', valueSelected);
+    localStorage.setItem('country', valueSelected);
+    if (valueSelected == 3468) {
+        $("#modal .location__item.location__item--region").css("display", "block");
+    } else {
+        $("#modal .location__item.location__item--region").css("display", "none");
+    }
+});
+
+//Функция смены значения "Региона" в основном модальном окне про геолокацию пользователя
+$(document).on("change", "#location-region", function(e){
+    var optionSelected = $("option:selected", this);
+    var valueSelected = this.value;
+    //Если человек выбрал страну через модальное окно, то мы устанавливаем ему её в куки
+    setCookie('region', valueSelected);
+    localStorage.setItem('region', valueSelected);
+    //console.log("Установлен регион "+valueSelected);
+});
+
+//Функция "Выбор страны"
+$('.location__submit').on('click', function () {
+    var contry_selected = $('#modal .location__select option:selected').text();
+    var region_selected = $('#modal .region__select option:selected').text();
+    $.fancybox.close();
+    event.preventDefault();
+    return false;
+});
+
+//Функция работы фильтра в блоке "Региональные координаторы" и Площадки
+$('.region__submit').on('click', function () {
+    var region_selected = $('#modal2 option:selected').text();
+    $(".choise-text-region").text(region_selected);
+    $.fancybox.close();
+    $( ".table > table > tbody > tr td:first-child" ).each(function( index ) {
+        $(this).parent().addClass("hidden");
+        if($(this).text() == region_selected) {
+            $(this).parent().removeClass("hidden");
+        }
+        //Взаимодействие с другим фильтром
+        if(region_selected == "Выбрать регион") {
+            $(this).parent().removeClass("hidden");
+            $(".show-hide-block").removeClass("hidden");
+            $("#regional .table").addClass("hidden");
+            $('.show-all-region-wrp').css('display','none')
+        } else {
+            $(".show-hide-block").addClass("hidden");
+            $('.show-all-region-wrp').css('display','block')
+            $("#regional .table").removeClass("hidden");
+        }
+    });
+    
+    event.preventDefault();
+    return false;
+});
+
+//Кнопка показать все регионы
+$('.show-all-region').on('click', function () {
+    var region_selected = $('#modal2 option[value="0"]').text();
+    $(".choise-text-region").text(region_selected);
+    $.fancybox.close();
+    $( ".table > table > tbody > tr td:first-child" ).each(function( index ) {
+            $(this).parent().removeClass("hidden");
+            $(".show-hide-block").removeClass("hidden");
+            $("#regional .table").removeClass("hidden");
+            $(".hide-all").removeClass("hidden");
+            $(".show-all").addClass("hidden");
+    });
+    event.preventDefault();
+    $('.show-all-region-wrp').css('display','none')
+    return false;
+});
+
+//Сортировка регионов в таблице
+document.addEventListener("DOMContentLoaded", (event) => {
+	var table = document.querySelector('.table');
+	if(table !== null){
+		var rows = Array.from(table.querySelectorAll('tbody > tr'));
+		rows.forEach((row) => {
+			row.dataset.region = row.querySelector('td:first-child').textContent;
+		});
+		rows.sort((a, b) => {
+			return a.dataset.region.localeCompare(b.dataset.region);
+		});
+		rows.forEach((row) => {
+			table.querySelector('tbody').appendChild(row);
+		});
+	}
+});
+
+// Возвращает куки с указанным name, или undefined, если ничего не найдено
+function getCookie(name) {
+  let matches = document.cookie.match(new RegExp(
+    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+  ));
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+//Функция установки куки
+function setCookie(name, value, options = {}) {
+  options = {
+    'path': '/',
+    'sameSite': 'Lax',
+    'secure': true, 
+    'max-age': 86400
+  };
+  
+  if(options.expires instanceof Date) {
+    options.expires = options.expires.toUTCString();
+  }
+  
+  let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+  
+  for (let optionKey in options) {
+    updatedCookie += "; " + optionKey;
+    let optionValue = options[optionKey];
+    if (optionValue !== true) {
+      updatedCookie += "=" + optionValue;
+    }
+  }
+  document.cookie = updatedCookie;
+}
+//Функция удаления куки
+function delete_cookie( name, path, domain ) {
+  if( getCookie( name ) ) {
+    document.cookie = name + "=" +
+      ((path) ? ";path="+path:"")+
+      ((domain)?";domain="+domain:"") +
+      ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
+  }
+}
+
+//создает из текста ссылки в ответах
+const comment = document.querySelectorAll('.comment-heading');
+const regex = /\b(https?:\/\/[^\s]+)/g;
+if (comment.length) {
+  comment.forEach((text) => {
+    const links = text.textContent.match(regex);
+    if (links) {
+      let modifiedText = text.innerHTML;
+      links.forEach((link) => {
+        const anchor = document.createElement("a");
+        anchor.href = link;
+        anchor.setAttribute('target', '_blank');
+        anchor.setAttribute('rel', 'nofollow');
+        anchor.textContent = link;
+        modifiedText = modifiedText.replace(link, anchor.outerHTML);
+      });
+      text.innerHTML = modifiedText;
+    }
+  });
+}
+// на странице результатов показывать блок, если есть куки входа через mos
+if(document.getElementById('addToMosRu') !== null){
+	if(getCookie('loginFromMos') !== undefined){
+		document.getElementById('addToMosRu').classList.remove('d-none');
+		document.getElementById('addToMosRu2').classList.remove('d-none');
+	}
+}

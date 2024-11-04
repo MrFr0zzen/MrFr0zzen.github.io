@@ -1,0 +1,35 @@
+.answers-wrp-page{
+    margin:0 auto 5rem auto;
+}
+.answers-wrp-page .answer-heading{
+    text-align:center;
+    color:#d33471;
+    margin-top: 4rem;
+    font-weight: 600;
+}
+.answers-wrp-page .answer-wrp{
+    margin-top: 3rem;
+    color: #038a88;
+}
+.answers-wrp-page .question-text{
+    color:#d33471;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+.answers-wrp-page .answ-color{
+    color:#038a88;
+}
+.answers-wrp-page .comment-heading{
+    margin:0;
+}
+.answers-wrp-page .comment-heading a {
+	text-decoration: underline;
+	word-break: break-all;
+}
+.answers-wrp-page .comment-heading a:hover {
+	color: #d33471;
+}
+#comment36, #comment35, #comment31, #comment4, #comment34, #comment33, #comment28, #comment40, #comment19, #comment17, #comment14,
+#comment-head-my36, #comment-head-my35, #comment-head-my31, #comment-head-my4, #comment-head-my34, #comment-head-my33, #comment-head-my28, #comment-head-my40, #comment-head-my19, #comment-head-my17, #comment-head-my14 {
+    display: none;
+}

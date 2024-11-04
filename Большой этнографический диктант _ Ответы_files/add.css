@@ -1,0 +1,33 @@
+header .pick-icon {
+    max-width: 1rem;
+    margin-right: 0.5rem;
+}
+#about {
+    background-image: url("../img/uzor.png");
+    background-color: #038a88;
+    background-position: bottom;    
+    background-repeat: repeat-x;
+    background-size: 3rem;
+}
+
+#count-users {
+    background-image: url("../img/uzor.png");
+    background-position: bottom;    
+    background-repeat: repeat-x;
+    background-size: 3rem;
+}
+.count-users-under {
+    background-image: url("../img/uzor-top.png");
+    background-position: top;    
+    background-repeat: repeat-x;
+    background-size: 3rem;
+    background-color: #efefef;
+    padding: 2rem 0;
+}
+
+footer {
+    background-image: url("../img/uzor-top.png");
+    background-position: top;    
+    background-repeat: repeat-x;
+    background-size: 3rem;
+}

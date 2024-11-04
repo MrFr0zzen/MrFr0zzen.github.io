@@ -1,0 +1,143 @@
+.header-reg{
+    border-bottom:1px solid whitesmoke;
+    padding: 1.35rem 0;
+}
+.header-reg .logo{
+    margin:0 auto;
+}
+.header-reg .logo a{
+    margin: 0 auto;
+    display: block;
+    width: 7.1875rem;
+}
+.reg-form-wrp{
+    margin:0 auto;
+    margin-bottom: 5rem;
+}
+.location__item--country {
+    margin-bottom: 0;
+}
+.form-reg .input-reg ,
+.form-reg .region-select-reg,
+.form-reg .location__select
+{
+    width:100%;
+    margin-bottom: 1.5rem;
+    border: 3px solid #d33471;
+    border-radius: 0.25rem;
+    padding: 0.8rem 0 0.8rem 1rem;
+} 
+.form-reg .input-reg:focus,
+.form-reg .region-select-reg
+{
+  outline: none;
+}
+.form-reg input[type="radio"],
+.form-reg input[type="checkbox"]
+{
+    display:none;
+}
+.form-reg-heading{
+    margin: 3rem 0 2rem;
+    text-align: center;
+    color: #d33471;
+}
+.reg-start{
+    display:block;
+    margin:0 auto;
+    background-color: #edaec6;
+    border: none;
+    border-radius: 0.25rem;
+    color: #fff;
+    font-size: 1.2rem;
+    padding: 0.5rem 0;
+    text-align:center;
+    
+}
+.reg-start:hover{
+    background-color: #edaec6!important;
+    color:#fff!important;
+}
+.reg-start.active{
+    background-color:#d33471;
+}
+.sex-wrp{
+    margin-bottom:1.5rem;
+    color:#d33471;
+}
+.sex-wrp label[for="sex1"]{
+    margin-right:2rem;
+}
+.sex-wrp label{
+    margin-left:0.5rem;
+    display: inline-block;
+	cursor: pointer;
+	position: relative;
+	padding-left: 25px;
+	margin-right: 0;
+	line-height: 18px;
+	user-select: none;
+}
+.sex-wrp label:before{
+    content: "";
+	display: inline-block;
+	width: 17px;
+	height: 18px;
+	position: absolute;
+	left: 0;
+	bottom: 1px;
+	border: 2px solid grey;
+    border-radius: 0.25rem;
+}
+.accord-wrp{
+    margin-bottom:2rem;
+    color:gray;
+    font-size: 0.9rem;
+    display:flex;
+}
+.accord-wrp label{
+    margin-left:0.4rem;
+    display: inline-block;
+	cursor: pointer;
+	position: relative;
+	padding-left: 27px;
+	margin-right: 0;
+	line-height: 18px;
+	user-select: none;
+}
+.accord-wrp label:before{
+    content: "";
+	display: inline-block;
+	width: 19px;
+	height: 18px;
+	position: absolute;
+	left: 0;
+	bottom: 15px;
+	border: 2px solid grey;
+    border-radius: 0.25rem;
+}
+.form-reg input[type=radio]:checked + label:before ,
+.form-reg input[type=checkbox]:checked + label:before 
+{
+	background: #d33471;
+}
+#mos_ru_auth > a {
+	display: block;
+	border: 0;
+	padding: 0;
+	margin: 0 auto 2rem;
+	border-radius: 3px;
+	box-shadow: 0 4px 9px #888;
+	overflow: hidden;
+}
+#mail-tooltip .valid-tooltip {
+	margin-top: calc(-1.5rem + .1rem);
+	padding-right: 1.5rem;
+	background-color: rgba(211, 52, 113, .9);
+}
+#mail-tooltip .btn-close {
+	position: absolute;
+	top: 0.25rem;
+	right: .25rem;
+	background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="%23fff"><path d="M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z"/></svg>');
+}

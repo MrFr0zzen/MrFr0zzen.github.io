@@ -1,0 +1,111 @@
+//Открываем пункт с регионом, только в случае если страна установлена "Россия"
+if(getCookie("country") == 3468) {
+    $("#region_reg").css("display", "block");
+} else {
+    $("#region_reg").css("display", "none");
+    $("#region_reg").val(0);
+}
+//Устанавливаем локаль
+if (getCookie("locale") != 1) {
+    $("#locale").val(getCookie("locale"));
+}
+//Устанавливаем ранее установленную страну
+if (getCookie("country")) {
+    $("#location-country option[value=" + getCookie("country") + "]").attr('selected', 'true')
+}
+//Устанавливаем ранее установленный регион
+if (getCookie("region")) {
+    $("#region_reg option[value=" + getCookie("region") + "]").attr('selected', 'true')
+}
+//Подхватываем  значение возраста с куки, если они есть
+if (getCookie("age") != 1) {
+    $("#age").val(getCookie("age"));
+}
+
+
+//Подхватываем изменение страны
+$(document).on("change", "#location-country", function(e){
+    //Открываем пункт с регионом, только в случае если страна установлена "Россия"
+    if($(this).val() == 3468) {
+        $("#region_reg").css("display", "block");
+    } else {
+        $("#region_reg").css("display", "none");
+        $("#region_reg").val(0);
+    }
+});
+
+//Смена значений ключа
+$(document).on("change", "#age", function(e){
+    changePassKey();
+});
+$(document).on("change", "#location-country", function(e){
+    changePassKey();
+});
+$(document).on("change", "#region_reg", function(e){
+    changePassKey();
+});
+
+function changePassKey(){
+    var age = $("#age").val();
+    var locale = $("#locale").val();
+    var country = $("#location-country").val();
+    var region = $("#region_reg").val();
+    
+    //Установка верного ключа прохождения тестов
+    //Сначала проверяем страну - Россия или Зарубежье
+    if(locale == "RU") {
+        if (country == 3468) {
+            if (age > 16) {
+                //Взрослые (Федеральные + региональные)
+                $("#passkey").val(1);   
+            } else {
+                //Российские Школьники
+                $("#passkey").val(2); 
+            }
+        } else { 
+            $("#passkey").val(4);
+        }
+    } else {
+        
+        if(locale == "EN") {
+            $("#passkey").val(5);
+        }
+        
+        if(locale == "ES") {
+            //Взрослые испанский язык
+            $("#passkey").val(6);
+        }
+    }
+
+}
+
+$(document).on("click", ".show_ansers", function(e){
+    var passkey = $("#passkey").val();
+    var age = $("#age").val();
+    var locale = $("#locale").val();
+    var country = $("#location-country").val();
+    var region = $("#region_reg").val();
+    
+    if(region == null) {region = 0;}
+    
+    //console.log("Ключ прохождения: " + passkey);
+    //console.log("Возраст: " + age);
+    //console.log("Локаль: " + locale);
+    //console.log("Страна: " + country);
+    //console.log("Регион: " + region);
+    //console.log();
+    
+    if(locale == "RU") {
+        var base_url = "https://miretno.ru/";
+    }
+    if(locale == "EN") {
+        var base_url = "https://miretno.ru/en/";
+    }
+    if(locale == "ES") {
+        var base_url = "https://miretno.ru/es/";
+    }
+    
+    var url = base_url + "answers2023?passkey=" + passkey + "&age=" + age + "&locale=" + locale + "&country=" + country + "&region=" + region;
+    window.open(url,'','');
+    return false;
+});
